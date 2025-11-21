@@ -29,32 +29,26 @@ export default defineConfig({
           JSON.parse(fs.readFileSync(resolve(__dirname, "package.json"), "utf-8"))
             .peerDependencies || {},
         ),
-          "react/jsx-runtime",
-          "tailwindcss",
-          "@tailwindcss/vite",
-          "react-dom/client",
-          "react-dom",
-        ],
+        "react/jsx-runtime",
+        "tailwindcss",
+        "@tailwindcss/vite",
+        "react-dom/client",
+        "react-dom",
+      ],
       input: Object.fromEntries(
         // https://rollupjs.org/configuration-options/#input
-				glob
-					.sync("src/**/*.{ts,tsx}", {
-						ignore: ["src/**/*.d.ts", "src/**/*.test.tsx", "src/test/**/*"],
-					})
-					.map((file) => [
-						// 1. The name of the entry point
-						// src/nested/foo.js becomes nested/foo
-						relative(
-							"src",
-							file.slice(
-								0,
-								file.length - extname(file).length
-							)
-						),
-						// 2. The absolute path to the entry file
-						// src/nested/foo.ts becomes /project/src/nested/foo.ts
-						fileURLToPath(new URL(file, import.meta.url)),
-					])
+        glob
+          .sync("src/**/*.{ts,tsx}", {
+            ignore: ["src/**/*.d.ts", "src/**/*.test.tsx", "src/test/**/*"],
+          })
+          .map((file) => [
+            // 1. The name of the entry point
+            // src/nested/foo.js becomes nested/foo
+            relative("src", file.slice(0, file.length - extname(file).length)),
+            // 2. The absolute path to the entry file
+            // src/nested/foo.ts becomes /project/src/nested/foo.ts
+            fileURLToPath(new URL(file, import.meta.url)),
+          ]),
       ),
       output: {
         // Keep asset names stable
