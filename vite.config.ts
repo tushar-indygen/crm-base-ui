@@ -1,0 +1,75 @@
+import path from "path";
+import { defineConfig } from "vite";
+import { extname, relative, resolve } from "path";
+import fs from "fs";
+import { fileURLToPath } from "node:url";
+import tailwindcss from "@tailwindcss/vite";
+import { glob } from "glob";
+import react from "@vitejs/plugin-react";
+import dts from "vite-plugin-dts";
+import { libInjectCss } from "vite-plugin-lib-inject-css";
+
+// https://vitejs.dev/config/
+export default defineConfig({
+  plugins: [react(), libInjectCss(), tailwindcss(), dts({ include: ["src"] })],
+  build: {
+    copyPublicDir: false,
+    lib: {
+      entry: resolve(__dirname, "src/main.ts"),
+      formats: ["es"],
+    },
+    rollupOptions: {
+      // Externalize dependencies and peerDependencies so we don't bundle node_modules
+      external: [
+        ...Object.keys(
+          JSON.parse(fs.readFileSync(resolve(__dirname, "package.json"), "utf-8")).dependencies ||
+            {},
+        ),
+        ...Object.keys(
+          JSON.parse(fs.readFileSync(resolve(__dirname, "package.json"), "utf-8"))
+            .peerDependencies || {},
+        ),
+          "react/jsx-runtime",
+          "tailwindcss",
+          "@tailwindcss/vite",
+          "react-dom/client",
+          "react-dom",
+        ],
+      input: Object.fromEntries(
+        // https://rollupjs.org/configuration-options/#input
+				glob
+					.sync("src/**/*.{ts,tsx}", {
+						ignore: ["src/**/*.d.ts", "src/**/*.test.tsx", "src/test/**/*"],
+					})
+					.map((file) => [
+						// 1. The name of the entry point
+						// src/nested/foo.js becomes nested/foo
+						relative(
+							"src",
+							file.slice(
+								0,
+								file.length - extname(file).length
+							)
+						),
+						// 2. The absolute path to the entry file
+						// src/nested/foo.ts becomes /project/src/nested/foo.ts
+						fileURLToPath(new URL(file, import.meta.url)),
+					])
+      ),
+      output: {
+        // Keep asset names stable
+        assetFileNames: "assets/[name][extname]",
+        // Produce predictable file names without content hashes
+        entryFileNames: "[name].js",
+        chunkFileNames: "[name].js",
+        // Preserve module layout so consumers can tree-shake/import specific modules if needed
+        preserveModules: true,
+      },
+    },
+  },
+  resolve: {
+    alias: {
+      "@": path.resolve(__dirname, "./src"),
+    },
+  },
+});
