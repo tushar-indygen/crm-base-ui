@@ -79,7 +79,7 @@ export {
     Treemap as RechartsTreemap,
     XAxis as RechartsXAxis,
     YAxis as RechartsYAxis,
-    ZAxis as RechartsZAxis
+    ZAxis as RechartsZAxis,
 } from "recharts";
 export * from "./components/ui/radio-group";
 export * from "./components/ui/resizable";
@@ -109,8 +109,8 @@ export {
     getSortedRowModel,
     useReactTable,
     // Feature runtime exports
-    ColumnOrdering
-} from '@tanstack/react-table';
+    ColumnOrdering,
+} from "@tanstack/react-table";
 
 export type {
     // Core types
@@ -141,8 +141,12 @@ export type {
     RowSelectionRow,
     TableMeta,
     // Column sizing/ordering types
-    ColumnSizingColumnDef
-} from '@tanstack/react-table';
+    ColumnSizingColumnDef,
+    ExpandedState,
+    GroupingState,
+    ColumnPinningState,
+    ColumnSizingState,
+} from "@tanstack/react-table";
 export * from "./components/ui/textarea";
 export * from "./components/ui/toggle-group";
 export * from "./components/ui/theme-toggle";
