@@ -95,6 +95,54 @@ export * from "./components/ui/spinner";
 export * from "./components/ui/switch";
 export * from "./components/ui/table";
 export * from "./components/ui/tabs";
+export {
+    createColumnHelper,
+    flexRender,
+    getCoreRowModel,
+    getExpandedRowModel,
+    getFacetedMinMaxValues,
+    getFacetedRowModel,
+    getFacetedUniqueValues,
+    getFilteredRowModel,
+    getGroupedRowModel,
+    getPaginationRowModel,
+    getSortedRowModel,
+    useReactTable,
+    // Feature runtime exports
+    ColumnOrdering
+} from '@tanstack/react-table';
+
+export type {
+    // Core types
+    Table,
+    Row,
+    RowData,
+    RowModel,
+    Column,
+    Header,
+    AccessorFn,
+    // Note: use the ColumnDef variants that exist in v8
+    ColumnDef,
+    ColumnDefBase,
+    ColumnDefResolved,
+    ColumnMeta,
+    DisplayColumnDef,
+    GroupColumnDef,
+    IdentifiedColumnDef,
+    // Utility types
+    AggregationFn,
+    AggregationFns,
+    FilterFns,
+    SortingFns,
+    Updater,
+    OnChangeFn,
+    TableOptions,
+    TableState,
+    RowSelectionRow,
+    TableMeta,
+    // Column sizing/ordering types
+    ColumnSizingColumnDef
+} from '@tanstack/react-table';
 export * from "./components/ui/textarea";
 export * from "./components/ui/toggle-group";
 export * from "./components/ui/theme-toggle";
