@@ -1,5 +1,5 @@
 import { render, screen, fireEvent, waitFor } from "@testing-library/react";
-import { describe, it, expect, vi } from "vitest";
+import { describe, it, expect } from "vitest";
 import { ColumnDef } from "@tanstack/react-table";
 import { DataTable } from "./data-table";
 import { DataTableColumnHeader } from "./data-table-column-header";
