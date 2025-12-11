@@ -38,6 +38,11 @@ export function DataTableColumnHeader<TData, TValue>({
             ) : (
               <ChevronsUpDown className="ml-2 h-4 w-4" />
             )}
+            {column.getSortIndex() > -1 && (
+              <span className="ml-1 text-xs text-muted-foreground bg-accent rounded-full w-4 h-4 flex items-center justify-center">
+                {column.getSortIndex() + 1}
+              </span>
+            )}
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent align="start">

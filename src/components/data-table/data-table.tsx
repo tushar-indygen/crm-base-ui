@@ -11,6 +11,8 @@ import {
   GroupingState,
   SortingState,
   VisibilityState,
+  ColumnOrderState,
+  RowPinningState,
   flexRender,
   getCoreRowModel,
   getExpandedRowModel,
@@ -45,6 +47,18 @@ interface DataTableProps<TData, TValue> {
   enableGrouping?: boolean;
   enableColumnSizing?: boolean;
   enableColumnPinning?: boolean;
+  enableGlobalFilter?: boolean;
+  enableColumnOrdering?: boolean;
+  enableRowPinning?: boolean;
+  facetedFilters?: {
+    columnId: string;
+    title: string;
+    options: {
+      label: string;
+      value: string;
+      icon?: React.ComponentType<{ className?: string }>;
+    }[];
+  }[];
 }
 
 export function DataTable<TData, TValue>({
@@ -57,17 +71,27 @@ export function DataTable<TData, TValue>({
   enableGrouping = false,
   enableColumnSizing = false,
   enableColumnPinning = false,
+  enableGlobalFilter = false,
+  enableColumnOrdering = false,
+  enableRowPinning = false,
+  facetedFilters,
 }: DataTableProps<TData, TValue>) {
   const [rowSelection, setRowSelection] = React.useState({});
   const [columnVisibility, setColumnVisibility] = React.useState<VisibilityState>({});
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([]);
+  const [globalFilter, setGlobalFilter] = React.useState<string>("");
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [expanded, setExpanded] = React.useState<ExpandedState>({});
   const [grouping, setGrouping] = React.useState<GroupingState>([]);
   const [columnSizing, setColumnSizing] = React.useState<ColumnSizingState>({});
+  const [columnOrder, setColumnOrder] = React.useState<ColumnOrderState>([]);
   const [columnPinning, setColumnPinning] = React.useState<ColumnPinningState>({
     left: [],
     right: [],
+  });
+  const [rowPinning, setRowPinning] = React.useState<RowPinningState>({
+    top: [],
+    bottom: [],
   });
 
   const table = useReactTable({
@@ -78,10 +102,17 @@ export function DataTable<TData, TValue>({
       columnVisibility,
       rowSelection,
       columnFilters,
+      globalFilter,
       ...(enableRowExpansion && { expanded }),
       ...(enableGrouping && { grouping }),
       ...(enableColumnSizing && { columnSizing }),
       ...(enableColumnPinning && { columnPinning }),
+      ...(enableColumnOrdering && { columnOrder }),
+      ...(enableRowPinning && { rowPinning }),
+    },
+    defaultColumn: {
+      minSize: 50,
+      maxSize: 500,
     },
     enableRowSelection: true,
     ...(enableRowExpansion && { getExpandedRowModel: getExpandedRowModel() }),
@@ -89,11 +120,14 @@ export function DataTable<TData, TValue>({
     onRowSelectionChange: setRowSelection,
     onSortingChange: setSorting,
     onColumnFiltersChange: setColumnFilters,
+    onGlobalFilterChange: setGlobalFilter,
     onColumnVisibilityChange: setColumnVisibility,
     ...(enableRowExpansion && { onExpandedChange: setExpanded }),
     ...(enableGrouping && { onGroupingChange: setGrouping }),
     ...(enableColumnSizing && { onColumnSizingChange: setColumnSizing }),
     ...(enableColumnPinning && { onColumnPinningChange: setColumnPinning }),
+    ...(enableColumnOrdering && { onColumnOrderChange: setColumnOrder }),
+    ...(enableRowPinning && { onRowPinningChange: setRowPinning }),
     getCoreRowModel: getCoreRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
@@ -104,7 +138,12 @@ export function DataTable<TData, TValue>({
 
   return (
     <div className="space-y-4">
-      <DataTableToolbar table={table} searchKey={searchKey} />
+      <DataTableToolbar
+        table={table}
+        searchKey={searchKey}
+        enableGlobalFilter={enableGlobalFilter}
+        facetedFilters={facetedFilters}
+      />
       <div className="rounded-md border overflow-x-auto">
         <Table style={enableColumnSizing ? { width: table.getTotalSize() } : undefined}>
           <TableHeader>
@@ -133,8 +172,9 @@ export function DataTable<TData, TValue>({
                         <div
                           onMouseDown={header.getResizeHandler()}
                           onTouchStart={header.getResizeHandler()}
-                          className={`absolute right-0 top-0 h-full w-1 cursor-col-resize select-none touch-none hover:bg-primary/50 ${header.column.getIsResizing() ? "bg-primary" : "bg-border"
-                            }`}
+                          className={`absolute right-0 top-0 h-full w-1 cursor-col-resize select-none touch-none hover:bg-primary/50 ${
+                            header.column.getIsResizing() ? "bg-primary" : "bg-border"
+                          }`}
                         />
                       )}
                     </TableHead>
