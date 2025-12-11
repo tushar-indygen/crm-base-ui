@@ -8,6 +8,7 @@ import {
   ColumnPinningState,
   ColumnSizingState,
   ExpandedState,
+  GroupingState,
   SortingState,
   VisibilityState,
   flexRender,
@@ -62,6 +63,7 @@ export function DataTable<TData, TValue>({
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([]);
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [expanded, setExpanded] = React.useState<ExpandedState>({});
+  const [grouping, setGrouping] = React.useState<GroupingState>([]);
   const [columnSizing, setColumnSizing] = React.useState<ColumnSizingState>({});
   const [columnPinning, setColumnPinning] = React.useState<ColumnPinningState>({
     left: [],
@@ -77,6 +79,7 @@ export function DataTable<TData, TValue>({
       rowSelection,
       columnFilters,
       ...(enableRowExpansion && { expanded }),
+      ...(enableGrouping && { grouping }),
       ...(enableColumnSizing && { columnSizing }),
       ...(enableColumnPinning && { columnPinning }),
     },
@@ -88,6 +91,7 @@ export function DataTable<TData, TValue>({
     onColumnFiltersChange: setColumnFilters,
     onColumnVisibilityChange: setColumnVisibility,
     ...(enableRowExpansion && { onExpandedChange: setExpanded }),
+    ...(enableGrouping && { onGroupingChange: setGrouping }),
     ...(enableColumnSizing && { onColumnSizingChange: setColumnSizing }),
     ...(enableColumnPinning && { onColumnPinningChange: setColumnPinning }),
     getCoreRowModel: getCoreRowModel(),

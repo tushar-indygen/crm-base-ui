@@ -1,70 +1,121 @@
 # crm-base-ui
 
-A modern, accessible, and customizable component library built with [Radix UI](https://www.radix-ui.com/) and [Tailwind CSS](https://tailwindcss.com/). Designed for building robust CRM interfaces with ease.
+A modern, accessible component library built with [Radix UI](https://www.radix-ui.com/) and [Tailwind CSS](https://tailwindcss.com/) for building robust CRM interfaces.
 
 ## Features
 
-- **Accessible**: Built on top of Radix UI primitives to ensure full accessibility (WAI-ARIA compliant).
-- **Customizable**: Styled with Tailwind CSS, making it easy to adapt to your brand.
-- **Dark Mode**: Native support for dark mode.
-- **Lightweight**: Tree-shakeable components to keep your bundle size small.
-- **Charts**: Interactive charts powered by Recharts (Bar, Line, Pie, Radar, etc.).
-- **Forms**: Form building primitives fully compatible with React Hook Form and Zod.
-- **Calendar**: Date picker and calendar components using React Day Picker.
-- **Data Table**: Powerful, fully featured data table with sorting, filtering, and pagination powered by TanStack Table.
-- **Advanced Components**: Includes Accordion, Carousel, Resizable panels, Sonner toast, and simpler primitives like Buttons and Inputs.
-- **Type-Safe**: Written in TypeScript with full type definitions.
+- **Accessible**: Built on Radix UI primitives (WAI-ARIA compliant)
+- **Customizable**: Styled with Tailwind CSS
+- **Dark Mode**: Native support included
+- **Lightweight**: Tree-shakeable components
+- **Type-Safe**: Full TypeScript support
+- **Advanced Data Table**: Powered by TanStack Table with sorting, filtering, pagination, grouping, column resizing, and pinning
+- **Charts**: Interactive visualizations with Recharts
+- **Forms**: React Hook Form + Zod integration
+- **Calendar**: Date pickers with React Day Picker
 
 ## Installation
-
-Install the package via npm:
 
 ```bash
 npm install crm-base-ui
 ```
 
-## Available Components
+## Quick Start
 
-- **Core**: Button, Input, Checkbox, Radio Group, Select, Slider, Switch, Textarea, Toggle.
-- **Layout**: Aspect Ratio, Card, Collapsible, Resizable Panels, Scroll Area, Separator, Sheet, Sidebar.
-- **Feedback**: Alert, Alert Dialog, Badge, Progress, Skeleton, Sonner (Toast), Spinner, Tooltip.
-- **Navigation**: Breadcrumb, Dropdown Menu, Menubar, Navigation Menu, Pagination, Tabs.
-- **Data Display**: Accordion, Avatar, Calendar, Carousel, Chart, Table, Data Table.
-- **Form**: Form, Label.
-- **Overlay**: Dialog, Drawer, Hover Card, Popover, Context Menu, Command.
-
-## Usage
-
-Import the CSS in your root file (e.g., `main.tsx` or `App.tsx`):
+Import CSS in your root file (`main.tsx` or `App.tsx`):
 
 ```tsx
 import "crm-base-ui/dist/main.css";
 ```
 
-Import and use components in your application:
+Use components:
 
 ```tsx
-import { Button } from "crm-base-ui";
+import { Button, DataTable } from "crm-base-ui";
 
 function App() {
+  return <Button variant="default">Click me</Button>;
+}
+```
+
+## Data Table Usage
+
+The DataTable component supports advanced features:
+
+```tsx
+import { DataTable, DataTableColumnHeader } from "crm-base-ui";
+import { ColumnDef } from "@tanstack/react-table";
+
+const columns: ColumnDef<YourType>[] = [
+  {
+    accessorKey: "name",
+    header: ({ column }) => <DataTableColumnHeader column={column} title="Name" />,
+  },
+  // ... more columns
+];
+
+function MyTable() {
   return (
-    <div className="p-4">
-      <Button variant="default">Click me</Button>
-    </div>
+    <DataTable
+      columns={columns}
+      data={data}
+      searchKey="name"
+      enableRowExpansion={false}
+      enableGrouping={false}
+      enableColumnSizing={false}
+      enableColumnPinning={false}
+    />
   );
 }
+```
 
-export default App;
+## Available Components
+
+### Core
+
+Button, Input, Checkbox, Radio Group, Select, Slider, Switch, Textarea, Toggle
+
+### Layout
+
+Aspect Ratio, Card, Collapsible, Resizable Panels, Scroll Area, Separator, Sheet, Sidebar
+
+### Feedback
+
+Alert, Alert Dialog, Badge, Progress, Skeleton, Sonner (Toast), Tooltip
+
+### Navigation
+
+Breadcrumb, Dropdown Menu, Menubar, Navigation Menu, Pagination, Tabs
+
+### Data Display
+
+Accordion, Avatar, Calendar, Carousel, Chart (Bar, Line, Pie, Radar, Area), Table, **Data Table**
+
+### Form
+
+Form, Label (React Hook Form + Zod compatible)
+
+### Overlay
+
+Dialog, Drawer, Hover Card, Popover, Context Menu, Command
+
+## Peer Dependencies
+
+```json
+{
+  "react": "^19.2.0",
+  "react-dom": "^19.2.0"
+}
 ```
 
 ## Configuration
 
-Ensure your `tailwind.config.js` (if using Tailwind v3) or CSS configuration is set up to scan `node_modules/crm-base-ui` if you need to customize the styles deeply, though the library comes with pre-compiled styles.
+The library includes pre-compiled styles. If customizing deeply, ensure `tailwind.config.js` scans `node_modules/crm-base-ui`.
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+MIT License
 
 ## Author
 
-Created by **Indygen Team**.
+**Tushar Yadav** | Indygen Team
