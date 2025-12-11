@@ -9,7 +9,7 @@ A modern, accessible component library built with [Radix UI](https://www.radix-u
 - **Dark Mode**: Native support included
 - **Lightweight**: Tree-shakeable components
 - **Type-Safe**: Full TypeScript support
-- **Advanced Data Table**: Powered by TanStack Table with sorting, filtering, pagination, grouping, column resizing, and pinning
+- **Advanced Data Table**: Powered by TanStack Table with sorting, filtering, pagination, column resizing, and pinning
 - **Charts**: Interactive visualizations with Recharts
 - **Forms**: React Hook Form + Zod integration
 - **Calendar**: Date pickers with React Day Picker
@@ -61,7 +61,6 @@ function MyTable() {
       data={data}
       searchKey="name"
       enableRowExpansion={false}
-      enableGrouping={false}
       enableColumnSizing={false}
       enableColumnPinning={false}
     />

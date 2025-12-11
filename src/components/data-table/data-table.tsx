@@ -8,7 +8,6 @@ import {
   ColumnPinningState,
   ColumnSizingState,
   ExpandedState,
-  GroupingState,
   SortingState,
   VisibilityState,
   ColumnOrderState,
@@ -19,7 +18,6 @@ import {
   getFacetedRowModel,
   getFacetedUniqueValues,
   getFilteredRowModel,
-  getGroupedRowModel,
   getPaginationRowModel,
   getSortedRowModel,
   useReactTable,
@@ -44,7 +42,7 @@ interface DataTableProps<TData, TValue> {
   onRowClick?: (row: Row<TData>) => void;
   renderSubComponent?: (props: { row: Row<TData> }) => React.ReactNode;
   enableRowExpansion?: boolean;
-  enableGrouping?: boolean;
+
   enableColumnSizing?: boolean;
   enableColumnPinning?: boolean;
   enableGlobalFilter?: boolean;
@@ -68,7 +66,7 @@ export function DataTable<TData, TValue>({
   onRowClick,
   renderSubComponent,
   enableRowExpansion = false,
-  enableGrouping = false,
+
   enableColumnSizing = false,
   enableColumnPinning = false,
   enableGlobalFilter = false,
@@ -82,7 +80,7 @@ export function DataTable<TData, TValue>({
   const [globalFilter, setGlobalFilter] = React.useState<string>("");
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [expanded, setExpanded] = React.useState<ExpandedState>({});
-  const [grouping, setGrouping] = React.useState<GroupingState>([]);
+
   const [columnSizing, setColumnSizing] = React.useState<ColumnSizingState>({});
   const [columnOrder, setColumnOrder] = React.useState<ColumnOrderState>([]);
   const [columnPinning, setColumnPinning] = React.useState<ColumnPinningState>({
@@ -104,7 +102,7 @@ export function DataTable<TData, TValue>({
       columnFilters,
       globalFilter,
       ...(enableRowExpansion && { expanded }),
-      ...(enableGrouping && { grouping }),
+
       ...(enableColumnSizing && { columnSizing }),
       ...(enableColumnPinning && { columnPinning }),
       ...(enableColumnOrdering && { columnOrder }),
@@ -116,14 +114,14 @@ export function DataTable<TData, TValue>({
     },
     enableRowSelection: true,
     ...(enableRowExpansion && { getExpandedRowModel: getExpandedRowModel() }),
-    ...(enableGrouping && { getGroupedRowModel: getGroupedRowModel() }),
+
     onRowSelectionChange: setRowSelection,
     onSortingChange: setSorting,
     onColumnFiltersChange: setColumnFilters,
     onGlobalFilterChange: setGlobalFilter,
     onColumnVisibilityChange: setColumnVisibility,
     ...(enableRowExpansion && { onExpandedChange: setExpanded }),
-    ...(enableGrouping && { onGroupingChange: setGrouping }),
+
     ...(enableColumnSizing && { onColumnSizingChange: setColumnSizing }),
     ...(enableColumnPinning && { onColumnPinningChange: setColumnPinning }),
     ...(enableColumnOrdering && { onColumnOrderChange: setColumnOrder }),
