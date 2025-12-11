@@ -39,6 +39,7 @@ interface DataTableProps<TData, TValue> {
   data: TData[];
   searchKey?: string;
   onRowClick?: (row: Row<TData>) => void;
+  renderSubComponent?: (props: { row: Row<TData> }) => React.ReactNode;
   enableRowExpansion?: boolean;
   enableGrouping?: boolean;
   enableColumnSizing?: boolean;
@@ -50,6 +51,7 @@ export function DataTable<TData, TValue>({
   data,
   searchKey,
   onRowClick,
+  renderSubComponent,
   enableRowExpansion = false,
   enableGrouping = false,
   enableColumnSizing = false,
@@ -110,6 +112,7 @@ export function DataTable<TData, TValue>({
                     <TableHead
                       key={header.id}
                       colSpan={header.colSpan}
+                      className="relative"
                       style={{
                         width: enableColumnSizing ? `${header.getSize()}px` : undefined,
                         position: isPinned ? "sticky" : undefined,
@@ -122,6 +125,14 @@ export function DataTable<TData, TValue>({
                       {header.isPlaceholder
                         ? null
                         : flexRender(header.column.columnDef.header, header.getContext())}
+                      {enableColumnSizing && (
+                        <div
+                          onMouseDown={header.getResizeHandler()}
+                          onTouchStart={header.getResizeHandler()}
+                          className={`absolute right-0 top-0 h-full w-1 cursor-col-resize select-none touch-none hover:bg-primary/50 ${header.column.getIsResizing() ? "bg-primary" : "bg-border"
+                            }`}
+                        />
+                      )}
                     </TableHead>
                   );
                 })}
@@ -159,7 +170,7 @@ export function DataTable<TData, TValue>({
                   {enableRowExpansion && row.getIsExpanded() && (
                     <TableRow>
                       <TableCell colSpan={columns.length} className="p-0">
-                        {/* Row expansion content goes here */}
+                        {renderSubComponent ? renderSubComponent({ row }) : null}
                       </TableCell>
                     </TableRow>
                   )}
