@@ -2,7 +2,7 @@
   "name": "crm-base-ui",
   "author": "Tushar Yadav",
   "private": false,
-  "version": "0.1.5",
+  "version": "0.1.6",
   "type": "module",
   "main": "dist/main.js",
   "module": "dist/main.js",
