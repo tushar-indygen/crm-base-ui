@@ -143,7 +143,7 @@ export function DataTable<TData, TValue>({
         facetedFilters={facetedFilters}
       />
       <div className="rounded-md border overflow-x-auto">
-        <Table style={enableColumnSizing ? { width: table.getTotalSize() } : undefined}>
+        <Table style={enableColumnSizing ? { minWidth: table.getTotalSize() } : undefined}>
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
               <TableRow key={headerGroup.id}>
