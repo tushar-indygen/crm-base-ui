@@ -9,14 +9,35 @@ const buttonVariants = cva(
   {
     variants: {
       variant: {
-        default: "bg-primary text-primary-foreground hover:bg-primary/90",
+        default:
+          "bg-[var(--button-default-background)] text-[var(--button-default-foreground)] " +
+          "hover:bg-[var(--button-default-hover-background,var(--button-default-background))] " +
+          "hover:text-[var(--button-default-hover-text,var(--button-default-foreground))]",
+
         destructive:
-          "bg-destructive text-white hover:bg-destructive/90 focus-visible:ring-destructive/20 dark:focus-visible:ring-destructive/40 dark:bg-destructive/60",
+          "bg-[var(--button-destructive-background)] text-[var(--button-destructive-foreground)] " +
+          "hover:bg-[var(--button-destructive-hover-background,var(--button-destructive-background))] " +
+          "hover:text-[var(--button-destructive-hover-text,var(--button-destructive-foreground))]",
+
+        secondary:
+          "bg-[var(--button-secondary-background)] text-[var(--button-secondary-foreground)] " +
+          "hover:bg-[var(--button-secondary-hover-background,var(--button-secondary-background))] " +
+          "hover:text-[var(--button-secondary-hover-text,var(--button-secondary-foreground))]",
+
         outline:
-          "border bg-background shadow-xs hover:bg-accent hover:text-accent-foreground dark:bg-input/30 dark:border-input dark:hover:bg-input/50",
-        secondary: "bg-secondary text-secondary-foreground hover:bg-secondary/80",
-        ghost: "hover:bg-accent hover:text-accent-foreground dark:hover:bg-accent/50",
-        link: "text-primary underline-offset-4 hover:underline",
+          "border border-border bg-[var(--button-outline-background)] text-[var(--button-outline-foreground)] " +
+          "hover:bg-[var(--button-outline-hover-background,var(--button-outline-background))] " +
+          "hover:text-[var(--button-outline-hover-text,var(--button-outline-foreground))]",
+
+        ghost:
+          "bg-[var(--button-ghost-background)] text-[var(--button-ghost-foreground)] " +
+          "hover:bg-[var(--button-ghost-hover-background,var(--button-ghost-background))] " +
+          "hover:text-[var(--button-ghost-hover-text,var(--button-ghost-foreground))]",
+
+        link:
+          "bg-[var(--button-link-background)] text-[var(--button-link-foreground)] underline-offset-4 " +
+          "hover:bg-[var(--button-link-hover-background,var(--button-link-background))] " +
+          "hover:text-[var(--button-link-hover-text,var(--button-link-foreground))] hover:underline",
       },
       size: {
         default: "h-9 px-4 py-2 has-[>svg]:px-3",

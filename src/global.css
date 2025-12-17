@@ -158,6 +158,39 @@
     border-color: var(--color-sidebar-border, hsl(220 13% 91%));
     outline-color: var(--color-sidebar-ring, hsl(217.2 91.2% 59.8%));
   }
+  :root {
+    /* Button fallbacks */
+    --button-default-background: var(--primary);
+    --button-default-foreground: var(--primary-foreground);
+    --button-default-hover-background: color-mix(in oklch, var(--primary) 90%, black);
+    --button-default-hover-text: var(--primary-foreground);
+
+    --button-destructive-background: var(--destructive);
+    --button-destructive-foreground: white;
+    --button-destructive-hover-background: color-mix(in oklch, var(--destructive) 90%, black);
+    --button-destructive-hover-text: white;
+
+    --button-secondary-background: var(--secondary);
+    --button-secondary-foreground: var(--secondary-foreground);
+    --button-secondary-hover-background: color-mix(in oklch, var(--secondary) 80%, black);
+    --button-secondary-hover-text: var(--secondary-foreground);
+
+    --button-outline-background: transparent;
+    --button-outline-foreground: var(--foreground);
+    --button-outline-hover-background: color-mix(in oklch, var(--foreground) 5%, transparent);
+    --button-outline-hover-text: var(--foreground);
+
+    --button-ghost-background: transparent;
+    --button-ghost-foreground: var(--foreground);
+    --button-ghost-hover-background: color-mix(in oklch, var(--foreground) 5%, transparent);
+    --button-ghost-hover-text: var(--foreground);
+
+    --button-link-background: transparent;
+    --button-link-foreground: var(--primary);
+    --button-link-hover-background: transparent;
+    --button-link-hover-text: var(--primary);
+  }
+
   body {
     background-color: var(--background, var(--color-sidebar, #fff));
     color: var(--foreground, var(--color-sidebar-foreground, #111));
