@@ -17,6 +17,7 @@ export * from "./components/ui/collapsible";
 export * from "./components/ui/command";
 export * from "./components/ui/context-menu";
 export * from "./components/data-table";
+export * from "./components/kanban";
 export * from "./components/ui/dialog";
 export * from "./components/ui/drawer";
 export * from "./components/ui/dropdown-menu";
