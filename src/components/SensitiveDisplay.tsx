@@ -44,6 +44,7 @@ export function SensitiveDisplay({
 
   const toggleVisibility = (e: React.MouseEvent) => {
     e.stopPropagation()
+    if (disabled) return
     setIsVisible(!isVisible)
   }
 
@@ -100,7 +101,7 @@ export function SensitiveDisplay({
   if (!value) return <span className="text-muted-foreground">N/A</span>
 
   return (
-    <div className={`flex items-center gap-2 ${className}`}>
+    <div className={`flex items-center gap-2 ${className} ${disabled ? "opacity-50" : ""}`}>
       {/* Grid stack to prevent layout shift: widest element defines width */}
       <div className="grid font-mono overflow-hidden">
         {/* Visible layer */}
@@ -137,6 +138,7 @@ export function SensitiveDisplay({
         size="icon"
         className="h-5 w-5 hover:bg-transparent"
         onClick={toggleVisibility}
+        disabled={disabled}
         title={isVisible ? "Hide value" : "Show value"}
       >
         {ToggleIcon}
